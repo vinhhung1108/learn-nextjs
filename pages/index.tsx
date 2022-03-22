@@ -1,11 +1,24 @@
-import type { NextPage } from 'next'
+import { MainLayout } from '@/components/layout'
+import { NextPageWithLayout } from 'models'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
+  const router = useRouter();
+  function goToDetailPage() {
+    router.push({
+      pathname: '/posts/[postId]',
+      query: {
+        postId: 123,
+        ref: 'abc',
+      }
+    })
+  }
   return (
-    <div className={styles.container}>
+      <div className={styles.container}>
       <Head>
         <title>Learn NextJS - Kem</title>
         <meta name="description" content="Learn NextJS + TypeScript" />
@@ -21,7 +34,10 @@ const Home: NextPage = () => {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
-
+        <Link href="/about">
+          <a>Go to About Page</a>
+        </Link>
+        <button onClick={goToDetailPage}>Go to Detail Page</button>
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
@@ -68,5 +84,5 @@ const Home: NextPage = () => {
     </div>
   )
 }
-
+Home.Layout= MainLayout;
 export default Home
